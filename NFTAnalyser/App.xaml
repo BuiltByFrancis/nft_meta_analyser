@@ -1,0 +1,16 @@
+﻿<Application
+    x:Class="NFTAnalyser.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:NFTAnalyser"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Controls/PathSetup.xaml" />
+                <ResourceDictionary Source="../Controls/PageLayout.xaml" />
+                <ResourceDictionary Source="../Controls/TraitPage.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

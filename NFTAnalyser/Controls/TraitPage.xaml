@@ -1,0 +1,210 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:co"
+    xmlns:vms="clr-namespace:NFTAnalyser.ViewModels">
+
+    <DataTemplate x:Key="CategoryHeader" DataType="{x:Type vms:CategoryVM}">
+        <StackPanel
+            Margin="5"
+            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
+            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Expander}}"
+            Orientation="Horizontal">
+            <Label
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Content="{Binding Count}"
+                FontSize="32"
+                Foreground="White" />
+            <Label
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Content="{Binding Title}"
+                FontSize="32"
+                Foreground="white" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CategoryItem" DataType="{x:Type vms:CategoryItemVM}">
+        <Grid
+            Margin="5"
+            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
+            VerticalAlignment="Center"
+            Background="#202020">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Content="{Binding Trait}"
+                FontSize="20"
+                Foreground="White" />
+            <Label
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Content="{Binding Count}"
+                FontSize="20"
+                Foreground="White" />
+            <CheckBox
+                Grid.Column="3"
+                Margin="5"
+                VerticalAlignment="Center"
+                IsChecked="{Binding IsChecked}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vms:TraitCategoriesVM}">
+        <ScrollViewer>
+            <ItemsControl Background="#202020" ItemsSource="{Binding Categories}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander
+                            MinWidth="300"
+                            Margin="5"
+                            Background="#161616"
+                            HeaderTemplate="{StaticResource CategoryHeader}">
+                            <ItemsControl ItemTemplate="{StaticResource CategoryItem}" ItemsSource="{Binding Items}" />
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TraitFilterVM" DataType="{x:Type vms:TraitFilterVM}">
+        <Border
+            Margin="5"
+            Background="#303030"
+            BorderBrush="#FF000000"
+            BorderThickness="1"
+            CornerRadius="8">
+            <StackPanel Margin="2.5" Orientation="Horizontal">
+                <Label Content="{Binding Title}" />
+                <Button
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Command="{Binding Remove}"
+                    Content="  x  " />
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vms:TraitFiltersVM}">
+        <StackPanel
+            Margin="-5"
+            Background="#202020"
+            Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="2"
+                    Content="{Binding FilterCount}"
+                    FontSize="20"
+                    Foreground="White" />
+            </Grid>
+            <ScrollViewer
+                Padding="0,5,0,0"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Disabled">
+                <ItemsControl
+                    Grid.Column="0"
+                    ItemTemplate="{StaticResource TraitFilterVM}"
+                    ItemsSource="{Binding ActiveFilters}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ImageVM" DataType="{x:Type vms:ImageVM}">
+        <Border
+            Margin="5"
+            Background="#303030"
+            BorderBrush="#FF000000"
+            BorderThickness="1"
+            CornerRadius="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Grid.ColumnSpan="4"
+                    Source="{Binding Uri}" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Content="{Binding Id}"
+                    FontSize="20"
+                    Foreground="White" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Content="{Binding Name}"
+                    FontSize="20"
+                    Foreground="White" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vms:ImagesVM}">
+        <ItemsControl ItemTemplate="{StaticResource ImageVM}" ItemsSource="{Binding Images}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="5" Rows="3" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vms:PageControllerVM}">
+        <Grid Margin="-5" Background="#202020">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                MinWidth="50"
+                Margin="5"
+                Background="#303030"
+                BorderBrush="Transparent"
+                Command="{Binding Previous}"
+                Content="&lt;" />
+            <Button
+                Grid.Column="1"
+                MinWidth="50"
+                Margin="5"
+                Background="#303030"
+                BorderBrush="Transparent"
+                Command="{Binding Next}"
+                Content="&gt;" />
+            <Label
+                Grid.Column="3"
+                Content="{Binding Info}"
+                FontSize="16"
+                Foreground="White" />
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
